@@ -4,6 +4,8 @@ import './App.css';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import Menu from "./components/Menu";
 
+import {DISHES} from "./shared/dishes";
+
 class App extends Component {
     render() {
         return (
@@ -13,7 +15,7 @@ class App extends Component {
                         <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
                     </div>
                 </Navbar>
-                <Menu/>
+                <Menu dishes = {DISHES}/>
             </div>
         );
     }
