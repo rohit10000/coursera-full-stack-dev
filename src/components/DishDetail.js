@@ -67,9 +67,7 @@ function DishDetail(props){
                     <div className="col-12 col-md-5 m-1">
                         <RenderDish dish={props.dish} />
                     </div>
-                    <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments} />
-                    </div>
+                    <RenderComments comments={props.comments} />
                 </div>
             </div>
         )
