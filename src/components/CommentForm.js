@@ -22,11 +22,10 @@ class CommentForm extends Component{
             isModalOpen: !this.state.isModalOpen
         })
     }
-    handleSubmit(event) {
+    handleSubmit(values) {
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         this.toggleModal();
-        alert("Submitted.");
-        event.preventDefault();
-
+        alert("Values: " + JSON.stringify(values)+ values.rating);
     }
 
 
@@ -44,7 +43,7 @@ class CommentForm extends Component{
                                     Rating
                                 </Label>
                                 <Col xs={12} >
-                                    <Control.select model=".rating" id="rating"
+                                    <Control.select model=".rating" id="rating" name={"rating"}
                                     className={"form-control"}>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -59,10 +58,10 @@ class CommentForm extends Component{
                                     Your Name
                                 </Label>
                                 <Col xs={12}>
-                                    <Control.text model={".name"} id={"name"} className={"form-control"} name={"name"}
+                                    <Control.text model={".author"} id={"name"} className={"form-control"} name={"author"}
                                                   placeholder={"Your Name"}
                                                   validators={{required, minLength: minLength(3), maxLength:maxLength(15)}}/>
-                                    <Errors model={".name"} className={"text-danger"}
+                                    <Errors model={".author"} className={"text-danger"}
                                             show={"touched"} messages={{
                                         required: 'Required ',
                                         minLength: 'Must be greater than 2 characters',
