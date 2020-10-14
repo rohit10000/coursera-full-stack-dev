@@ -4,7 +4,6 @@ import { Card, CardImg, CardText, CardBody,
 import { Loading } from './Loading';
 
 function RenderCard({item, isLoading, errMess}) {
-    // console.log(isLoading)
     if (isLoading) {
         return(
             <Loading />
@@ -19,6 +18,8 @@ function RenderCard({item, isLoading, errMess}) {
         return (
             <Card>
                 <CardImg src={item.image} alt={item.name}/>
+                {console.log("Debug in Home: ", item)}
+
                 <CardBody>
                     <CardTitle>{item.name}</CardTitle>
                     {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
@@ -30,9 +31,7 @@ function RenderCard({item, isLoading, errMess}) {
 }
 
 function Home(props) {
-    console.log("Debug Home: " ,props);
-
-
+    console.log("Debug in Home", props);
     return(
         <div className="container">
             <div className="row align-items-start">
