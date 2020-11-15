@@ -52,14 +52,14 @@ class Main extends Component{
             <NavigationContainer>
                 <Drawer.Navigator initialRouteName="Home">
                     <Drawer.Screen name="Home" component={homeNavigator}  options={{ title: "Home" ,headerStyle: {
-                            backgroundColor: "#512DA8"
+                            backgroundColor: "#512DA8", display: "none"
                         }, headerTintColor: '#fff', headerTitleStyle: {
                             color: "#fff"
                         }
                     }}
                     />
                     <Drawer.Screen name="Menu" component={menuNavigator} options={{ title: "Menu" ,headerStyle: {
-                            backgroundColor: "#512DA8"
+                            backgroundColor: "#512DA8", display: "none"
                         }, headerTintColor: '#fff', headerTitleStyle: {
                             color: "#fff"
                         }
