@@ -1,11 +1,11 @@
 import React from 'react';
 import Main from "./components/Main";
-import {SafeAreaView} from "react-native";
+import {View, Platform} from "react-native";
 
 export default function App() {
   return (
-      // <SafeAreaView>
+      <View style={{flex:1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
         <Main/>
-      // </SafeAreaView>
+      </View>
   );
 }
