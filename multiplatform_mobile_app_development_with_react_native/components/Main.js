@@ -82,9 +82,12 @@ class Main extends Component{
 
         return (
             <NavigationContainer>
-                <Drawer.Navigator initialRouteName="Home" >
+                <Drawer.Navigator initialRouteName="About" drawerContentOptions={{
+                    backgroundColor:"#D1C4E9"
+
+                }}>
                     <Drawer.Screen name="Home" component={homeNavigator}  options={{ title: "Home" ,
-                        headerStyle: { display: "none" }
+                        headerStyle: { display: "none"}
                     }}/>
 
                     <Drawer.Screen name="About" component={aboutNavigator} options={{ title: "About Us" ,
@@ -98,7 +101,6 @@ class Main extends Component{
                     <Drawer.Screen name="Contact" component={contactNavigator} options={{ title: "Contact Us" ,
                         headerStyle: { display: "none"}
                     }}/>
-
 
                 </Drawer.Navigator>
             </NavigationContainer>
