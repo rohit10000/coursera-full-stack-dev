@@ -14,6 +14,7 @@ class Menu extends Component{
         }
     }
 
+
     render() {
 
         const {navigate} = this.props.navigation;
