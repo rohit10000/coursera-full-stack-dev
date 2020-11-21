@@ -7,13 +7,25 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList} from "@react-navigation/drawer";
 import Contact from "./Contact";
 import About from "./About";
-import {useWindowDimensions, ScrollView, SafeAreaView, View, Image, Text, StyleSheet} from "react-native";
+import {useWindowDimensions, SafeAreaView, View, Image, Text, StyleSheet} from "react-native";
 import {Icon} from "react-native-elements";
+
+import { connect } from 'react-redux';
+import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import StackNavigator from "@react-navigation/stack/src/navigators/createStackNavigator";
+import Reservation from "./Reservation";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 class Main extends Component{
+
+    componentDidMount() {
+        this.props.fetchDishes();
+        this.props.fetchComments();
+        this.props.fetchPromos();
+        this.props.fetchLeaders();
+    }
 
     render() {
         const menuNavigator = function(){
@@ -134,6 +146,31 @@ class Main extends Component{
                 </Stack.Navigator>
             )
         }
+        const reservationNavigator = function (){
+            return(
+                <Stack.Navigator>
+                    <Stack.Screen name={"Reservation"} component={Reservation}
+                                  options={
+                                      ({navigation}) => (
+                                          {
+                                              title: 'Reservation',
+                                              headerStyle: {
+                                                  backgroundColor: "#512DA8",
+                                                  height: 80
+                                              },
+                                              headerTintColor: '#fff',
+                                              headerTitleStyle: {
+                                                  color: "#fff"
+                                              },
+                                              headerLeft:() =>(<Icon name="menu" size={24}
+                                                                     color='white'
+                                                                     onPress={() => navigation.toggleDrawer()}/>)
+                                          }
+                                      )
+                                  }/>
+                </Stack.Navigator>
+            )
+        }
 
         const CustomDrawerContentComponent = (props) => (
             <DrawerContentScrollView {...props}>
@@ -156,7 +193,7 @@ class Main extends Component{
 
         return (
             <NavigationContainer>
-                <Drawer.Navigator initialRouteName="Home"
+                <Drawer.Navigator initialRouteName="Reservation"
                                   drawerStyle={{backgroundColor: "#D1C4E9"}}
                                   drawerContent={(props) => <CustomDrawerContentComponent {...props}/>}
                                   drawerType={dimensions.width >= 768 ? 'permanent': 'front'}>
@@ -241,6 +278,26 @@ class Main extends Component{
                                    }
                     />
 
+                    <Drawer.Screen name="Reservation" component={reservationNavigator}
+                                   options={
+                                       {
+                                           title: "Reserve Table",
+                                           drawerLabel: "Reserve Table",
+                                           drawerIcon: ({ tintColor, focused }) => (
+                                               <Icon
+                                                   name='cutlery'
+                                                   type='font-awesome'
+                                                   size={24}
+                                                   color={tintColor}
+                                               />
+                                           ),
+                                           headerStyle:{
+                                               display: "none"
+                                           }
+                                       }
+                                   }
+                    />
+
                 </Drawer.Navigator>
             </NavigationContainer>
         );
@@ -271,5 +328,20 @@ const styles = StyleSheet.create({
     }
 });
 
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes,
+        comments: state.comments,
+        promotions: state.promotions,
+        leaders: state.leaders
+    }
+}
 
-export default Main;
+const mapDispatchToProps = dispatch => ({
+    fetchDishes: () => dispatch(fetchDishes()),
+    fetchComments: () => dispatch(fetchComments()),
+    fetchPromos: () => dispatch(fetchPromos()),
+    fetchLeaders: () => dispatch(fetchLeaders()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
