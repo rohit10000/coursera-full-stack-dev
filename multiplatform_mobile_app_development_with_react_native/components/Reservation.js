@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Picker, ScrollView, Switch, Text, View, StyleSheet} from "react-native";
+import {Button, Picker, ScrollView, Switch, Text, View, StyleSheet, Modal} from "react-native";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import {Icon} from "react-native-elements";
 
@@ -13,12 +13,17 @@ class Reservation extends Component{
             guests: 1,
             smoking: false,
             date: '',
-            show: false
+            show: false,
+            showModal: false
         }
     }
-    handleReservation(){
-        console.log(JSON.stringify(this.state));
-        alert(JSON.stringify(this.state));
+    toggleModal = () => {
+        this.setState({
+            showModal: !this.state.showModal
+        })
+    }
+
+    resetForm = () => {
         this.setState({
             guests: 1,
             smoking: false,
@@ -27,9 +32,37 @@ class Reservation extends Component{
         });
     }
 
+    handleReservation = () => {
+        console.log(JSON.stringify(this.state));
+        this.toggleModal();
+    }
+
+
     render() {
         return(
             <ScrollView>
+
+                <Modal animationType={"slide"}
+                       visible={this.state.showModal}
+                       onDismiss={() => this.toggleModal()}
+                       onRequestClose={() => this.toggleModal()}
+                       transparent={false}>
+
+                    <View style = {styles.modal}>
+                        <Text style = {styles.modalTitle}>Your Reservation</Text>
+                        <Text style = {styles.modalText}>Number of Guests: {this.state.guests}</Text>
+                        <Text style = {styles.modalText}>Smoking?: {this.state.smoking ? 'Yes' : 'No'}</Text>
+                        <Text style = {styles.modalText}>Date and Time: {this.state.date.toString()}</Text>
+
+                        <Button
+                            onPress = {() =>{this.toggleModal(); this.resetForm();}}
+                            color="#512DA8"
+                            title="Close"
+                        />
+                    </View>
+
+                </Modal>
+
                 <View style={styles.formRow}>
                     <Text style={styles.formLabel}>Number of Guests</Text>
                     <Picker selectedValue={this.state.guests}
@@ -113,6 +146,22 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         padding: 5,
         borderColor: "#512DA8"
+    },
+    modal: {
+        justifyContent: 'center',
+        margin: 20
+    },
+    modalTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        backgroundColor: '#512DA8',
+        textAlign: 'center',
+        color: 'white',
+        marginBottom: 20
+    },
+    modalText: {
+        fontSize: 18,
+        margin: 10
     }
 })
 
