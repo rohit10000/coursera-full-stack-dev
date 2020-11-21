@@ -193,7 +193,7 @@ class Main extends Component{
 
         return (
             <NavigationContainer>
-                <Drawer.Navigator initialRouteName="Reservation"
+                <Drawer.Navigator initialRouteName="Menu"
                                   drawerStyle={{backgroundColor: "#D1C4E9"}}
                                   drawerContent={(props) => <CustomDrawerContentComponent {...props}/>}
                                   drawerType={dimensions.width >= 768 ? 'permanent': 'front'}>
